@@ -19,7 +19,7 @@ ENV PATH="/opt/conda/bin:${PATH}"
 #------------------------------------------------------------------------------
 FROM my_pretty_image
 
-RUN apt-get install vim git docker zsh
+RUN apt-get install vim git docker.io zsh sudo
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 COPY --from=python_install /opt/conda /opt/conda
