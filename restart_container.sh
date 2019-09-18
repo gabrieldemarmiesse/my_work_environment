@@ -13,7 +13,7 @@ sudo docker run \
      -v conda_cache:/opt/conda/pkgs \
      -v apt_cache1:/var/cache/apt \
      -v apt_cache2:/var/lib/apt \
-     -v ~/.ssh:/root/.ssh:ro \
+     -v ~/.ssh/id_rsa:/root/.ssh/id_rsa:ro \
      -v /var/run/docker.sock:/var/run/docker.sock \
      -v /:/host \
      --name gabriel_work_env \
