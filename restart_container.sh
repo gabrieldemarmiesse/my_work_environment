@@ -10,6 +10,9 @@ sudo docker rm gabriel_work_env
 set -e
 sudo docker run \
      -d \
+     -v conda_cache:/opt/conda/pkgs \
+     -v apt_cache1:/var/cache/apt \
+     -v apt_cache2:/var/lib/apt \
      -v ~/.ssh:/root/.ssh:ro \
      -v /var/run/docker.sock:/var/run/docker.sock \
      -v /:/host \
