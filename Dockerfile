@@ -42,5 +42,8 @@ COPY .zshrc /root/.zshrc
 COPY --from=python_install /opt/conda /opt/conda
 ENV PATH="/opt/conda/bin:${PATH}"
 
+RUN git config --global user.email gabrieldemarmiesse@gmail.com
+RUN git config --global user.name gabrieldemarmiesse
+RUN ln -s /host/mnt/c/Users/yolo/Desktop/projects /projects
 
 RUN python -c "print('hello world')"

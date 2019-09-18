@@ -10,6 +10,7 @@ sudo docker rm gabriel_work_env
 set -e
 sudo docker run \
      -d \
+     -v ~/.ssh:/root/.ssh:ro \
      -v /var/run/docker.sock:/var/run/docker.sock \
      -v /:/host \
      --name gabriel_work_env \
