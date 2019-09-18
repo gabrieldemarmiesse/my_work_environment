@@ -1,0 +1,8 @@
+fonts-powerline
+vim
+git
+docker.io
+zsh
+sudo
+gcc
+tmux
