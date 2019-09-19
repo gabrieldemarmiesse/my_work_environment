@@ -11,11 +11,13 @@ set -e
 sudo docker run \
      -d \
      -v conda_cache:/opt/conda/pkgs \
+     -v general_cache:/root/.cache \
      -v apt_cache1:/var/cache/apt \
      -v apt_cache2:/var/lib/apt \
      -v ~/.ssh/id_rsa:/root/.ssh/id_rsa:ro \
      -v /var/run/docker.sock:/var/run/docker.sock \
      -v /:/host \
+     --net=host \
      --name gabriel_work_env \
      gabrieldemarmiesse/work_env:local_build \
-     sleep infinity
+     bash -c 'service ssh start && sleep infinity'

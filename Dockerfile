@@ -21,6 +21,9 @@ RUN --mount=type=cache,target=/opt/conda/pkgs \
     --mount=src=/conda_packages.txt,destination=/conda_packages.txt,ro=true \
     cat /conda_packages.txt | xargs conda install
 
+RUN --mount=type=cache,target=/root/.cache/pip \
+    --mount=src=/pip_packages.txt,destination=/pip_packages.txt,ro=true \
+    cat /pip_packages.txt | xargs pip install
 
 #------------------------------------------------------------------------------
 FROM my_pretty_image
@@ -45,5 +48,8 @@ ENV PATH="/opt/conda/bin:${PATH}"
 RUN git config --global user.email gabrieldemarmiesse@gmail.com
 RUN git config --global user.name gabrieldemarmiesse
 RUN ln -s /host/mnt/c/Users/yolo/Desktop/projects /projects
+RUN echo "Port 3000" >> /etc/ssh/sshd_config
+COPY id_rsa.pub /root/authorized_hosts
+RUN chmod 700 /root/authorized_hosts
 
 RUN python -c "print('hello world')"

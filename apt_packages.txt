@@ -7,3 +7,5 @@ sudo
 gcc
 tmux
 iputils-ping
+python3-distutils
+openssh-server
