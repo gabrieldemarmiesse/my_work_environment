@@ -49,7 +49,7 @@ RUN git config --global user.email gabrieldemarmiesse@gmail.com
 RUN git config --global user.name gabrieldemarmiesse
 RUN ln -s /host/mnt/c/Users/yolo/Desktop/projects /projects
 RUN echo "Port 3000" >> /etc/ssh/sshd_config
-COPY id_rsa.pub /root/authorized_hosts
-RUN chmod 700 /root/authorized_hosts
+COPY id_rsa.pub /root/.ssh/authorized_keys
+RUN chmod 700 /root/.ssh/authorized_keys
 
 RUN python -c "print('hello world')"
