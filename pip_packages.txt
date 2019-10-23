@@ -32,3 +32,5 @@ wrapt
 scikit-learn
 pymongo
 pre-commit
+tox-conda
+tensorflow

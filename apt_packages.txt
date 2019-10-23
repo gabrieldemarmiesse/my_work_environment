@@ -1,7 +1,11 @@
 fonts-powerline
 vim
 git
-docker.io
+apt-transport-https
+ca-certificates
+curl
+gnupg-agent
+software-properties-common
 zsh
 sudo
 gcc
