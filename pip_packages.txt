@@ -33,4 +33,11 @@ scikit-learn
 pymongo
 pre-commit
 tox-conda
-tensorflow
+tensorflow-cpu
+sphinx
+markdown
+twine
+black
+mkdocs
+flake8
+psycopg2-binary

@@ -4,8 +4,7 @@ FROM ubuntu:18.04 as my_pretty_image
 
 RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf.d/force_yes
 
-RUN apt-get update
-RUN apt-get install wget
+RUN apt-get update && apt-get install wget gcc
 
 
 #------------------------------------------------------------------------------
@@ -57,11 +56,17 @@ ENV PATH="/opt/conda/bin:${PATH}"
 
 RUN git config --global user.email gabrieldemarmiesse@gmail.com
 RUN git config --global user.name gabrieldemarmiesse
-RUN ln -s /host/mnt/c/Users/yolo/Desktop/projects /projects
+RUN git config --global core.excludesfile /root/.gitignore
+COPY user_gitignore /root/.gitignore
+
+RUN ln -s /mnt/c/Users/yolo/Desktop/projects /projects
 RUN echo "Port 3000" >> /etc/ssh/sshd_config
 COPY id_rsa.pub /root/.ssh/authorized_keys
 RUN chmod 700 /root/.ssh/authorized_keys
 COPY ./ssh_host_ecdsa_key /etc/ssh/
 COPY ./ssh_host_ecdsa_key.pub /etc/ssh/
+COPY .pypirc /root/.pypirc
+COPY setup_oss.py /root/.scripts/setup_oss.py
+
 
 RUN python -c "print('hello world')"

@@ -99,3 +99,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias gacp="git add . && git commit && git push"
 alias gpum="git pull upstream master"
+
+function setup_oss() {
+  python /root/.scripts/setup_oss.py "$1"
+}

@@ -17,6 +17,7 @@ sudo docker run \
      -v ~/.ssh/id_rsa:/root/.ssh/id_rsa:ro \
      -v /var/run/docker.sock:/var/run/docker.sock \
      -v /:/host \
+     -v /mnt:/mnt \
      --net=host \
      --name gabriel_work_env \
      gabrieldemarmiesse/work_env:local_build \
