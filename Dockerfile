@@ -51,8 +51,10 @@ RUN --mount=type=cache,target=/var/cache/apt,id=cache_apt \
 
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 COPY .zshrc /root/.zshrc
-COPY --from=python_install /opt/conda /opt/conda
-ENV PATH="/opt/conda/bin:${PATH}"
+
+RUN wget https://github.com/cli/cli/releases/download/v0.5.4/gh_0.5.4_linux_amd64.deb && \
+    dpkg -i gh_*_linux_amd64.deb && \
+    rm gh_*_linux_amd64.deb
 
 RUN git config --global user.email gabrieldemarmiesse@gmail.com
 RUN git config --global user.name gabrieldemarmiesse
@@ -68,5 +70,8 @@ COPY ./ssh_host_ecdsa_key.pub /etc/ssh/
 COPY .pypirc /root/.pypirc
 COPY setup_oss.py /root/.scripts/setup_oss.py
 
+# -------------------------------------------------------------------------
+COPY --from=python_install /opt/conda /opt/conda
+ENV PATH="/opt/conda/bin:${PATH}"
 
 RUN python -c "print('hello world')"
