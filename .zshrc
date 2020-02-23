@@ -68,7 +68,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=()
 
 source $ZSH/oh-my-zsh.sh
 
@@ -98,8 +98,11 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias gacp="git add . && git commit && git push"
-alias gpum="git pull upstream master"
 
 function setup_oss() {
   python /root/.scripts/setup_oss.py "$1"
+}
+
+function gc() {
+  git checkout "$1" && git pull
 }

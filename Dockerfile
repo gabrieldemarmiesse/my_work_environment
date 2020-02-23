@@ -52,9 +52,11 @@ RUN --mount=type=cache,target=/var/cache/apt,id=cache_apt \
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 COPY .zshrc /root/.zshrc
 
-RUN wget https://github.com/cli/cli/releases/download/v0.5.4/gh_0.5.4_linux_amd64.deb && \
+ENV CLI_VERSION 0.5.7
+RUN wget https://github.com/cli/cli/releases/download/v${CLI_VERSION}/gh_${CLI_VERSION}_linux_amd64.deb && \
     dpkg -i gh_*_linux_amd64.deb && \
     rm gh_*_linux_amd64.deb
+
 
 RUN git config --global user.email gabrieldemarmiesse@gmail.com
 RUN git config --global user.name gabrieldemarmiesse
@@ -73,5 +75,9 @@ COPY setup_oss.py /root/.scripts/setup_oss.py
 # -------------------------------------------------------------------------
 COPY --from=python_install /opt/conda /opt/conda
 ENV PATH="/opt/conda/bin:${PATH}"
+
+RUN --mount=src=/full_bazel_install.sh,destination=full_bazel_install.sh bash ./full_bazel_install.sh
+ENV PATH="/root/bin:$PATH"
+
 
 RUN python -c "print('hello world')"
