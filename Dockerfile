@@ -61,6 +61,7 @@ RUN wget https://github.com/cli/cli/releases/download/v${CLI_VERSION}/gh_${CLI_V
 RUN git config --global user.email gabrieldemarmiesse@gmail.com
 RUN git config --global user.name gabrieldemarmiesse
 RUN git config --global core.excludesfile /root/.gitignore
+RUN git config --global push.default upstream
 COPY user_gitignore /root/.gitignore
 
 RUN ln -s /mnt/c/Users/yolo/Desktop/projects /projects
@@ -71,6 +72,7 @@ COPY ./ssh_host_ecdsa_key /etc/ssh/
 COPY ./ssh_host_ecdsa_key.pub /etc/ssh/
 COPY .pypirc /root/.pypirc
 COPY setup_oss.py /root/.scripts/setup_oss.py
+COPY update_pr.py /root/.scripts/update_pr.py
 
 # -------------------------------------------------------------------------
 COPY --from=python_install /opt/conda /opt/conda

@@ -42,3 +42,4 @@ mkdocs
 flake8
 psycopg2-binary
 thefuck
+typeguard

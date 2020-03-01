@@ -103,6 +103,10 @@ function setup_oss() {
   python /root/.scripts/setup_oss.py "$1"
 }
 
+function update_pr() {
+  python /root/.scripts/update_pr.py "$1"
+}
+
 function gc() {
   git checkout "$1" && git pull
 }

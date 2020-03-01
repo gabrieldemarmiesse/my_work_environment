@@ -16,3 +16,5 @@ openssh-server
 libpq-dev
 unzip
 g++
+rsync
+htop
