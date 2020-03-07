@@ -52,7 +52,7 @@ RUN --mount=type=cache,target=/var/cache/apt,id=cache_apt \
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 COPY .zshrc /root/.zshrc
 
-ENV CLI_VERSION 0.5.7
+ENV CLI_VERSION 0.6.1
 RUN wget https://github.com/cli/cli/releases/download/v${CLI_VERSION}/gh_${CLI_VERSION}_linux_amd64.deb && \
     dpkg -i gh_*_linux_amd64.deb && \
     rm gh_*_linux_amd64.deb

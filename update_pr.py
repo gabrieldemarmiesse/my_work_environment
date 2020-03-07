@@ -22,8 +22,7 @@ except CalledProcessError:
     check_bash_call(f"git checkout {user}_{branch}")
     check_bash_call(f"git pull")
 check_bash_call(f"git branch --set-upstream-to {user}/{branch}", fail_ok=True)
-try:
-    check_bash_call(f"git merge master")
-    check_bash_call(f"git push {user} HEAD:{branch}")
-except CalledProcessError:
-    check_bash_call(f"git add . && git commit && git push", fail_ok=True)
+
+check_bash_call(f"git merge master")
+check_bash_call(f"git push {user} HEAD:{branch}")
+

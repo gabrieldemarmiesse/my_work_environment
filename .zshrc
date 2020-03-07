@@ -110,3 +110,7 @@ function update_pr() {
 function gc() {
   git checkout "$1" && git pull
 }
+
+function squash_all() {
+  git reset $(git merge-base master $(git rev-parse --abbrev-ref HEAD))
+}
