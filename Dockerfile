@@ -26,9 +26,6 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 RUN --mount=src=/py_git,destination=/py_git pip install /py_git
 
-
-RUN setup_oss
-
 #------------------------------------------------------------------------------
 FROM my_pretty_image
 
