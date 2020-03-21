@@ -24,6 +24,11 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=src=/pip_packages.txt,destination=/pip_packages.txt,ro=true \
     pip install -r /pip_packages.txt
 
+RUN --mount=src=/py_git,destination=/py_git pip install /py_git
+
+
+RUN setup_oss
+
 #------------------------------------------------------------------------------
 FROM my_pretty_image
 
@@ -64,15 +69,12 @@ RUN git config --global core.excludesfile /root/.gitignore
 RUN git config --global push.default upstream
 COPY user_gitignore /root/.gitignore
 
-RUN ln -s /mnt/c/Users/yolo/Desktop/projects /projects
 RUN echo "Port 3000" >> /etc/ssh/sshd_config
 COPY id_rsa.pub /root/.ssh/authorized_keys
 RUN chmod 700 /root/.ssh/authorized_keys
 COPY ./ssh_host_ecdsa_key /etc/ssh/
 COPY ./ssh_host_ecdsa_key.pub /etc/ssh/
 COPY .pypirc /root/.pypirc
-COPY setup_oss.py /root/.scripts/setup_oss.py
-COPY update_pr.py /root/.scripts/update_pr.py
 
 # -------------------------------------------------------------------------
 COPY --from=python_install /opt/conda /opt/conda
@@ -81,5 +83,6 @@ ENV PATH="/opt/conda/bin:${PATH}"
 RUN --mount=src=/full_bazel_install.sh,destination=full_bazel_install.sh bash ./full_bazel_install.sh
 ENV PATH="/root/bin:$PATH"
 
+RUN --mount=src=/vmtouch.sh,destination=vmtouch.sh bash vmtouch.sh
 
 RUN python -c "print('hello world')"

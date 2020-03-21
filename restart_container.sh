@@ -18,8 +18,11 @@ sudo docker run \
      -v /var/run/docker.sock:/var/run/docker.sock \
      -v /:/host \
      -v github_config:/root/.config/gh \
+     -v /projects:/projects \
      -v /mnt:/mnt \
      --net=host \
+     --pid=host \
+     --privileged \
      --name gabriel_work_env \
      gabrieldemarmiesse/work_env:local_build \
      bash -c 'service ssh start && sleep infinity'

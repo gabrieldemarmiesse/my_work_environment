@@ -43,3 +43,6 @@ flake8
 psycopg2-binary
 thefuck
 typeguard
+pytest
+pytest-xdist
+pytest-cov
