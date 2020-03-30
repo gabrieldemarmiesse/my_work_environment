@@ -14,9 +14,10 @@ sudo docker run \
      -v general_cache:/root/.cache \
      -v apt_cache1:/var/cache/apt \
      -v apt_cache2:/var/lib/apt \
-     -v /root/.ssh/id_rsa:/root/.ssh/id_rsa:ro \
+     -v /root/.ssh:/root/.ssh \
      -v /var/run/docker.sock:/var/run/docker.sock \
      -v /:/host \
+     -v history:/root/.zsh_history \
      -v github_config:/root/.config/gh \
      -v /projects:/projects \
      -v /mnt:/mnt \

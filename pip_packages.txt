@@ -46,3 +46,4 @@ typeguard
 pytest
 pytest-xdist
 pytest-cov
+scikit-image

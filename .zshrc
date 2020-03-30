@@ -97,18 +97,16 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+HISTFILE=/root/.zsh_history/all_history
 alias gacp="git add . && git commit && git push"
-
-function setup_oss() {
-  python /root/.scripts/setup_oss.py "$1"
-}
-
-function update_pr() {
-  python /root/.scripts/update_pr.py "$1"
-}
+alias bgacp="black ./ && git add . && git commit && git push"
 
 function gc() {
   git checkout "$1" && git pull
+}
+
+function my_du() {
+  du -h --max-depth=1 $1
 }
 
 function squash_all() {

@@ -54,11 +54,13 @@ RUN --mount=type=cache,target=/var/cache/apt,id=cache_apt \
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 COPY .zshrc /root/.zshrc
 
-ENV CLI_VERSION 0.6.1
+RUN --mount=src=/full_bazel_install.sh,destination=full_bazel_install.sh bash ./full_bazel_install.sh
+ENV PATH="/root/bin:$PATH"
+
+ENV CLI_VERSION 0.6.2
 RUN wget https://github.com/cli/cli/releases/download/v${CLI_VERSION}/gh_${CLI_VERSION}_linux_amd64.deb && \
     dpkg -i gh_*_linux_amd64.deb && \
     rm gh_*_linux_amd64.deb
-
 
 RUN git config --global user.email gabrieldemarmiesse@gmail.com
 RUN git config --global user.name gabrieldemarmiesse
@@ -77,9 +79,6 @@ COPY .pypirc /root/.pypirc
 COPY --from=python_install /opt/conda /opt/conda
 ENV PATH="/opt/conda/bin:${PATH}"
 
-RUN --mount=src=/full_bazel_install.sh,destination=full_bazel_install.sh bash ./full_bazel_install.sh
-ENV PATH="/root/bin:$PATH"
-
-RUN --mount=src=/vmtouch.sh,destination=vmtouch.sh bash vmtouch.sh
-
 RUN python -c "print('hello world')"
+RUN zsh -c "echo hello world"
+RUN bazel --help
