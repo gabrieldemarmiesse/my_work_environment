@@ -47,3 +47,4 @@ pytest
 pytest-xdist
 pytest-cov
 scikit-image
+pgcli

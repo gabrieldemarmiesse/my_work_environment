@@ -4,7 +4,7 @@ FROM ubuntu:18.04 as my_pretty_image
 
 RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf.d/force_yes
 
-RUN apt-get update && apt-get install wget gcc
+RUN apt-get update && apt-get install wget gcc libpq-dev
 
 
 #------------------------------------------------------------------------------
@@ -35,6 +35,7 @@ RUN locale-gen en_US.UTF-8
 # prepare the cache.
 RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/cache/apt,id=cache_apt \
     --mount=type=cache,target=/var/lib/apt,id=lib_apt \
     --mount=src=/apt_packages.txt,destination=/apt_packages.txt,ro=true \
@@ -57,10 +58,13 @@ COPY .zshrc /root/.zshrc
 RUN --mount=src=/full_bazel_install.sh,destination=full_bazel_install.sh bash ./full_bazel_install.sh
 ENV PATH="/root/bin:$PATH"
 
-ENV CLI_VERSION 0.6.2
+ENV CLI_VERSION 0.7.0
 RUN wget https://github.com/cli/cli/releases/download/v${CLI_VERSION}/gh_${CLI_VERSION}_linux_amd64.deb && \
     dpkg -i gh_*_linux_amd64.deb && \
     rm gh_*_linux_amd64.deb
+
+RUN curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+RUN chmod +x /usr/local/bin/docker-compose
 
 RUN git config --global user.email gabrieldemarmiesse@gmail.com
 RUN git config --global user.name gabrieldemarmiesse
@@ -81,4 +85,4 @@ ENV PATH="/opt/conda/bin:${PATH}"
 
 RUN python -c "print('hello world')"
 RUN zsh -c "echo hello world"
-RUN bazel --help
+RUN bazel --help && docker-compose --help && docker --help

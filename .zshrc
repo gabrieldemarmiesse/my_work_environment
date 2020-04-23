@@ -98,10 +98,14 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 HISTFILE=/root/.zsh_history/all_history
+
 alias gacp="git add . && git commit && git push"
 alias bgacp="black ./ && git add . && git commit && git push"
+alias bfgacp="black ./ && flake8 && git add . && git commit && git push"
+
 export TF_VERSION=2.1.0
 export PY_VERSION=3.5
+export DOCKER_CLI_EXPERIMENTAL=enabled
 
 function gc() {
   git checkout "$1" && git pull
