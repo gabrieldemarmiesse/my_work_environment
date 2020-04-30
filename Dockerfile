@@ -53,7 +53,6 @@ RUN --mount=type=cache,target=/var/cache/apt,id=cache_apt \
     apt-get update && apt-get install docker-ce-cli
 
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-COPY .zshrc /root/.zshrc
 
 RUN --mount=src=/full_bazel_install.sh,destination=full_bazel_install.sh bash ./full_bazel_install.sh
 ENV PATH="/root/bin:$PATH"
@@ -66,13 +65,19 @@ RUN wget https://github.com/cli/cli/releases/download/v${CLI_VERSION}/gh_${CLI_V
 RUN curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
 
+RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc
+RUN mv mc /usr/local/bin/mc && \
+    chmod +x /usr/local/bin/mc
+
+COPY .zshrc /root/.zshrc
 RUN git config --global user.email gabrieldemarmiesse@gmail.com
 RUN git config --global user.name gabrieldemarmiesse
 RUN git config --global core.excludesfile /root/.gitignore
 RUN git config --global push.default upstream
+RUN git config --global credential.helper "cache --timeout=36000"
 COPY user_gitignore /root/.gitignore
 
-RUN echo "Port 3000" >> /etc/ssh/sshd_config
+RUN echo "Port 3844" >> /etc/ssh/sshd_config
 COPY id_rsa.pub /root/.ssh/authorized_keys
 RUN chmod 700 /root/.ssh/authorized_keys
 COPY ./ssh_host_ecdsa_key /etc/ssh/
@@ -85,4 +90,4 @@ ENV PATH="/opt/conda/bin:${PATH}"
 
 RUN python -c "print('hello world')"
 RUN zsh -c "echo hello world"
-RUN bazel --help && docker-compose --help && docker --help
+RUN echo $PATH && bazel --help && docker-compose --help && docker --help && mc --help

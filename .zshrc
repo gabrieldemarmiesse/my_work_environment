@@ -106,6 +106,8 @@ alias bfgacp="black ./ && flake8 && git add . && git commit && git push"
 export TF_VERSION=2.1.0
 export PY_VERSION=3.5
 export DOCKER_CLI_EXPERIMENTAL=enabled
+export STORAGE_ROOT=/projects/work/storage_root
+export E3_DEVELOPER_USERNAME=gabriel.demarmiesse
 
 function gc() {
   git checkout "$1" && git pull
@@ -117,4 +119,8 @@ function my_du() {
 
 function squash_all() {
   git reset $(git merge-base master $(git rev-parse --abbrev-ref HEAD))
+}
+
+function reset_db() {
+  docker run --rm -v dev-environment_postgres_persistence:/do -v /projects/work/backup_db/volume:/back busybox sh -c "rm -rf /do/* && cp -r /back/* /do/ && ls /do/"
 }

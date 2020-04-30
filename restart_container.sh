@@ -1,6 +1,6 @@
 
 set -e
-sudo DOCKER_BUILDKIT=1 docker build --progress=plain -t gabrieldemarmiesse/work_env:local_build .
+sudo DOCKER_BUILDKIT=1 docker build -t gabrieldemarmiesse/work_env:local_build .
 #sudo docker push gabrieldemarmiesse/work_env:local_build
 
 set +e
@@ -8,6 +8,7 @@ sudo docker kill gabriel_work_env
 sudo docker rm gabriel_work_env
 
 set -e
+touch /root/.mc/config.json
 sudo docker run \
      -d \
      -v conda_cache:/opt/conda/pkgs \
@@ -15,6 +16,8 @@ sudo docker run \
      -v apt_cache1:/var/cache/apt \
      -v apt_cache2:/var/lib/apt \
      -v /root/.ssh:/root/.ssh \
+     -v mc_config:/root/.mc/ \
+     -v aws_config:/root/.aws/ \
      -v /var/run/docker.sock:/var/run/docker.sock \
      -v /:/host \
      -v history:/root/.zsh_history \

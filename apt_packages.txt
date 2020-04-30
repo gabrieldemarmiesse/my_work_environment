@@ -19,9 +19,12 @@ g++
 rsync
 htop
 make
-awscli
 sqitch
 libdbd-pg-perl
 postgresql-client
 libdbd-sqlite3-perl
 sqlite3
+telnet
+groff
+nodejs
+npm
