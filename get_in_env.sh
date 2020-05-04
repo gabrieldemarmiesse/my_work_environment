@@ -3,4 +3,4 @@ if [[ $(docker inspect -f '{{.State.Running}}' gabriel_work_env) != "true" ]]; t
     docker restart gabriel_work_env;
 fi
 
-docker exec -it gabriel_work_env bash -c 'cd /projects && zsh'
+docker exec -e COLUMNS="`tput cols`" -e LINES="`tput lines`" -it gabriel_work_env bash -c 'cd /projects && zsh'

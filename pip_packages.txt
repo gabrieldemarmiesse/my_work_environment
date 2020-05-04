@@ -33,7 +33,7 @@ scikit-learn
 pymongo
 pre-commit
 tox-conda
-tensorflow-cpu
+tensorflow-cpu==2.2.0rc4
 sphinx
 markdown
 twine

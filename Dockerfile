@@ -42,6 +42,11 @@ RUN --mount=type=cache,target=/var/cache/apt,id=cache_apt \
     apt-get update && \
     cat /apt_packages.txt | xargs apt-get install
 
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
+RUN apt-get update && apt-get install nodejs
+RUN node -v && npm -v
+RUN npm install prettier eslint --global
+
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 RUN add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
