@@ -26,3 +26,4 @@ libdbd-sqlite3-perl
 sqlite3
 telnet
 groff
+tzdata

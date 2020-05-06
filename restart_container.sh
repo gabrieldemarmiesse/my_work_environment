@@ -8,6 +8,7 @@ sudo docker kill gabriel_work_env
 sudo docker rm gabriel_work_env
 
 set -e
+mkdir -p /root/.mc
 touch /root/.mc/config.json
 sudo docker run \
      -d \
@@ -18,6 +19,7 @@ sudo docker run \
      -v /root/.ssh:/root/.ssh \
      -v mc_config:/root/.mc/ \
      -v aws_config:/root/.aws/ \
+     -v /root/.secret_envs:/root/.secret_envs \
      -v /var/run/docker.sock:/var/run/docker.sock \
      -v /:/host \
      -v history:/root/.zsh_history \

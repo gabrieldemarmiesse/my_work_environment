@@ -3,4 +3,5 @@ if [[ $(docker inspect -f '{{.State.Running}}' gabriel_work_env) != "true" ]]; t
     docker restart gabriel_work_env;
 fi
 
-docker exec -e COLUMNS="`tput cols`" -e LINES="`tput lines`" -it gabriel_work_env bash -c 'cd /projects && zsh'
+[ -z "$(ps -ef | grep cron | grep -v grep)" ] && sudo /etc/init.d/cron start &> /dev/null
+docker exec -it gabriel_work_env bash -c 'cd /projects && zsh'
