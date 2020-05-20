@@ -21,6 +21,7 @@ sudo docker run \
      -v aws_config:/root/.aws/ \
      -v /root/.secret_envs:/root/.secret_envs \
      -v /var/run/docker.sock:/var/run/docker.sock \
+     -v /tmp:/tmp \
      -v /:/host \
      -v history:/root/.zsh_history \
      -v github_config:/root/.config/gh \

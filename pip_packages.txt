@@ -49,3 +49,13 @@ pytest-cov
 scikit-image
 pgcli
 awscli
+redis
+boto3
+docker
+mo-future==3.17.19324
+structlog
+flower
+paramiko
+scp
+ruamel.yaml
+google-api-python-client

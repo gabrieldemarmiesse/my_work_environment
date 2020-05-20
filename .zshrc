@@ -102,6 +102,7 @@ HISTFILE=/root/.zsh_history/all_history
 alias gacp="git add . && git commit && git push"
 alias bgacp="black ./ && git add . && git commit && git push"
 alias bfgacp="black ./ && flake8 && git add . && git commit && git push"
+ alias sqd='date -u "+%Y%m%d%H%M%S"'
 
 export TF_VERSION=2.1.0
 export PY_VERSION=3.5
@@ -109,6 +110,14 @@ export DOCKER_CLI_EXPERIMENTAL=enabled
 export STORAGE_ROOT=/projects/storage_root
 export SECRET_ENVS=/root/.secret_envs
 export E3_DEVELOPER_USERNAME=gabriel.demarmiesse
+
+function local_bdd() {
+  export PGUSER=imagedb
+  export PGPASSWORD=imagedb
+  export PGHOST=localhost
+  export PGDB=imagedb
+  export PGPORT=5432
+}
 
 function gc() {
   git checkout "$1" && git pull
