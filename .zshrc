@@ -102,7 +102,10 @@ HISTFILE=/root/.zsh_history/all_history
 alias gacp="git add . && git commit && git push"
 alias bgacp="black ./ && git add . && git commit && git push"
 alias bfgacp="black ./ && flake8 && git add . && git commit && git push"
- alias sqd='date -u "+%Y%m%d%H%M%S"'
+alias sqd='date -u "+%Y%m%d%H%M%S"'
+alias dc='docker-compose'
+alias login_ecr='aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 766281746212.dkr.ecr.eu-west-1.amazonaws.com'
+alias gac="git add . && git commit"
 
 export TF_VERSION=2.1.0
 export PY_VERSION=3.5
@@ -133,4 +136,8 @@ function squash_all() {
 
 function reset_db() {
   docker run --rm -v dev-environment_postgres_persistence:/do -v /projects/work/backup_db/volume:/back busybox sh -c "rm -rf /do/* && cp -r /back/* /do/ && ls /do/"
+}
+
+function dump_to_csv() {
+  local_bdd && psql -c "\\copy ${1}(${2}) TO './${1}.csv' DELIMITER ';' CSV HEADER"
 }
