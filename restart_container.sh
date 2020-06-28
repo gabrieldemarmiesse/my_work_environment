@@ -1,7 +1,6 @@
 
 set -e
-sudo DOCKER_BUILDKIT=1 docker build -t gabrieldemarmiesse/work_env:local_build .
-#sudo docker push gabrieldemarmiesse/work_env:local_build
+DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build -t gabrieldemarmiesse/work_env:local_build .
 
 set +e
 sudo docker kill gabriel_work_env

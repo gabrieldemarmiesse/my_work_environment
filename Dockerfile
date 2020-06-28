@@ -108,3 +108,4 @@ COPY .pypirc /root/.pypirc
 RUN python -c "print('hello world')"
 RUN zsh -c "echo hello world"
 RUN echo $PATH && bazel --help && docker-compose --help && docker --help && mc --help
+RUN DOCKER_CLI_EXPERIMENTAL=enabled docker buildx install

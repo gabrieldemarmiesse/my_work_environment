@@ -107,6 +107,7 @@ alias dc='docker-compose'
 alias login_ecr='aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 766281746212.dkr.ecr.eu-west-1.amazonaws.com'
 alias gac="git add . && git commit"
 alias gcb="git checkout -b"
+alias upload-to-pypi="rm -rf dist/ && python setup.py sdist && twine upload  --repository-url=https://upload.pypi.org/legacy/ dist/*"
 
 export E3_REPOS=/projects/dev-environment/projects
 export E3_REPOSITORIES=/projects/dev-environment/projects
@@ -117,6 +118,7 @@ export STORAGE_ROOT=/projects/storage_root
 export SECRET_ENVS=/root/.secret_envs
 export SECRETS_DIRECTORY=/root/.secret_envs
 export E3_DEVELOPER_USERNAME=gabriel.demarmiesse
+export COMPOSE_DOCKER_CLI_BUILD=1
 
 function local_bdd() {
   export PGUSER=imagedb
