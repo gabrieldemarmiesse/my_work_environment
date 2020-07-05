@@ -47,6 +47,12 @@ FROM basic_ubuntu as install_pgfutter
 RUN wget -O /pgfutter https://github.com/lukasmartinelli/pgfutter/releases/download/v1.2/pgfutter_linux_amd64
 RUN chmod +x /pgfutter
 
+#-----------------------------------------------------------------------------
+FROM basic_ubuntu as install_buildx
+
+RUN wget -O /docker-buildx https://github.com/docker/buildx/releases/download/v0.4.1/buildx-v0.4.1.linux-amd64
+RUN chmod a+x /docker-buildx
+
 #------------------------------------------------------------------------------
 FROM basic_ubuntu
 
@@ -89,6 +95,7 @@ RUN --mount=type=bind,from=download_gh_cli,source=/gh_cli.deb,target=/gh_cli.deb
 COPY --from=install_docker_compose /docker-compose /usr/local/bin/docker-compose
 COPY --from=install_mc /mc /usr/local/bin/mc
 COPY --from=install_pgfutter /pgfutter /usr/local/bin/pgfutter
+COPY --from=install_buildx  /docker-buildx /root/.docker/cli-plugins/
 
 COPY .zshrc /root/.zshrc
 RUN git config --global user.email gabrieldemarmiesse@gmail.com
@@ -108,4 +115,4 @@ COPY .pypirc /root/.pypirc
 RUN python -c "print('hello world')"
 RUN zsh -c "echo hello world"
 RUN echo $PATH && bazel --help && docker-compose --help && docker --help && mc --help
-RUN DOCKER_CLI_EXPERIMENTAL=enabled docker buildx install
+RUN docker buildx install

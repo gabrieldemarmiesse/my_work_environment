@@ -112,11 +112,11 @@ alias gcb="git checkout -b"
 alias upload-to-pypi="rm -rf dist/ && python setup.py sdist && twine upload  --repository-url=https://upload.pypi.org/legacy/ dist/*"
 
 export E3_REPOS=/projects/dev-environment/projects
-export E3_REPOSITORIES=/projects/dev-environment/projects
+export E3_REPOSITORIES=/projects/work
 export TF_VERSION=2.1.0
 export PY_VERSION=3.5
 export DOCKER_CLI_EXPERIMENTAL=enabled
-export STORAGE_ROOT=/projects/storage_root
+export STORAGE_ROOT=/projects/work/storage_root
 export SECRET_ENVS=/root/.secret_envs
 export SECRETS_DIRECTORY=/root/.secret_envs
 export E3_DEVELOPER_USERNAME=gabriel.demarmiesse
