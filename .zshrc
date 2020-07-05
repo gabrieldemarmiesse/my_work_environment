@@ -101,7 +101,9 @@ HISTFILE=/root/.zsh_history/all_history
 
 alias gacp="git add . && git commit && git push"
 alias bgacp="black ./ && git add . && git commit && git push"
+alias ibgacp="isort ./ && black ./ && git add . && git commit && git push"
 alias bfgacp="black ./ && flake8 && git add . && git commit && git push"
+alias ibfgacp="isort ./ && black ./ && flake8 && git add . && git commit && git push"
 alias sqd='date -u "+%Y%m%d%H%M%S"'
 alias dc='docker-compose'
 alias login_ecr='aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 766281746212.dkr.ecr.eu-west-1.amazonaws.com'

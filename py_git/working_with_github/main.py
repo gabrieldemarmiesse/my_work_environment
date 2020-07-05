@@ -1,7 +1,8 @@
+import os
 import sys
 from subprocess import CalledProcessError
+
 from working_with_github.utils import run
-import os
 
 
 def checkout_pr():

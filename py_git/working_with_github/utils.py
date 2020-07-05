@@ -1,4 +1,4 @@
-from subprocess import check_call, CalledProcessError
+from subprocess import CalledProcessError, check_call
 
 
 def run(string, fail_ok=False):
