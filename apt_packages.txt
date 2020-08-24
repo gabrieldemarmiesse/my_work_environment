@@ -27,3 +27,4 @@ tzdata
 unzip
 vim
 zsh
+gettext-base

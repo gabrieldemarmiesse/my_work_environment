@@ -50,7 +50,7 @@ RUN chmod +x /pgfutter
 #-----------------------------------------------------------------------------
 FROM basic_ubuntu as install_buildx
 
-RUN wget -O /docker-buildx https://github.com/docker/buildx/releases/download/v0.4.1/buildx-v0.4.1.linux-amd64
+RUN wget -O /docker-buildx https://github.com/docker/buildx/releases/download/v0.4.2/buildx-v0.4.2.linux-amd64
 RUN chmod a+x /docker-buildx
 
 #------------------------------------------------------------------------------

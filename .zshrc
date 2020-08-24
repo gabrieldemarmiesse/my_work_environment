@@ -110,6 +110,7 @@ alias login_ecr='aws ecr get-login-password --region eu-west-1 | docker login --
 alias gac="git add . && git commit"
 alias gcb="git checkout -b"
 alias upload-to-pypi="rm -rf dist/ && python setup.py sdist && twine upload  --repository-url=https://upload.pypi.org/legacy/ dist/*"
+alias docker-container-prune-all="docker kill $(docker ps  | grep -v 'gabriel_work_env' | awk 'NR>1 {print $1}')"
 
 export E3_REPOS=/projects/dev-environment/projects
 export E3_REPOSITORIES=/projects/work
@@ -148,4 +149,14 @@ function reset_db() {
 
 function dump_to_csv() {
   local_bdd && psql -c "\\copy ${1}(${2}) TO './${1}.csv' DELIMITER ';' CSV HEADER"
+}
+
+function ssh-tunnel() {
+  ssh -N -L  ${3}:localhost:${3} ${1}@${2}
+}
+
+function docker-cp() {
+  id=$(docker create ${1})
+  docker cp $id:${2} ${3}
+  docker rm -v $id
 }
