@@ -152,7 +152,7 @@ function dump_to_csv() {
 }
 
 function ssh-tunnel() {
-  ssh -N -L  ${3}:localhost:${3} ${1}@${2}
+  ssh -N -L  ${2}:127.0.0.1:${2} ${1}
 }
 
 function docker-cp() {

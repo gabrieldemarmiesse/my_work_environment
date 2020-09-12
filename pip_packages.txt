@@ -55,3 +55,12 @@ twine
 typeguard
 wrapt
 wait-until
+pytest-mock
+crayons
+deprecation
+blindspin
+testcontainers
+minio
+fastapi
+python-jose
+sqlalchemy
