@@ -122,6 +122,7 @@ export SECRET_ENVS=/root/.secret_envs
 export SECRETS_DIRECTORY=/root/.secret_envs
 export E3_DEVELOPER_USERNAME=gabriel.demarmiesse
 export COMPOSE_DOCKER_CLI_BUILD=1
+export REGISTRY=766281746212.dkr.ecr.eu-west-1.amazonaws.com
 
 function local_bdd() {
   export PGUSER=imagedb
