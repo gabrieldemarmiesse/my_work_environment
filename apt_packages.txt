@@ -28,3 +28,4 @@ unzip
 vim
 zsh
 gettext-base
+dnsutils
