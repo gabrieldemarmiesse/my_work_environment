@@ -29,3 +29,5 @@ vim
 zsh
 gettext-base
 dnsutils
+pigz
+redis-tools
