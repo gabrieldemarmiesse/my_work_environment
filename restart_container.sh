@@ -13,6 +13,7 @@ sudo docker rm gabriel_work_env
 set -e
 mkdir -p /root/.mc
 touch /root/.mc/config.json
+touch /root/.zsh_history
 sudo docker run \
      -d \
      -v conda_cache:/opt/conda/pkgs \
@@ -26,7 +27,7 @@ sudo docker run \
      -v /var/run/docker.sock:/var/run/docker.sock \
      -v /tmp:/tmp \
      -v /:/host \
-     -v history:/root/.zsh_history_volume \
+     -v /root/.zsh_history:/root/.zsh_history \
      -v github_config:/root/.config/gh \
      -v /projects:/projects \
      -v /mnt:/mnt \

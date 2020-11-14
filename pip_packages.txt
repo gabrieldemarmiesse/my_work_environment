@@ -64,3 +64,4 @@ minio
 fastapi
 python-jose
 sqlalchemy
+PyGithub

@@ -97,7 +97,10 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-HISTFILE=/root/.zsh_history_volume/all_history
+
+# save history immediately
+setopt INC_APPEND_HISTORY
+export HISTTIMEFORMAT="[%F %T] "
 
 alias gacp="git add . && git commit && git push"
 alias bgacp="black ./ && git add . && git commit && git push"
