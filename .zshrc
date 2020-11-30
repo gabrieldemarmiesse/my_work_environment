@@ -98,6 +98,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 HISTFILE=/root/.zsh_history/all_history
+SAVEHIST=2000
 
 alias gacp="git add . && git commit && git push"
 alias bgacp="black ./ && git add . && git commit && git push"
@@ -124,13 +125,11 @@ export E3_DEVELOPER_USERNAME=gabriel.demarmiesse
 export COMPOSE_DOCKER_CLI_BUILD=1
 export REGISTRY=766281746212.dkr.ecr.eu-west-1.amazonaws.com
 
-function local_bdd() {
-  export PGUSER=imagedb
-  export PGPASSWORD=imagedb
-  export PGHOST=localhost
-  export PGDB=imagedb
-  export PGPORT=5432
-}
+export PGUSER=imagedb
+export PGPASSWORD=imagedb
+export PGHOST=localhost
+export PGDB=imagedb
+export PGPORT=5432
 
 function gc() {
   git checkout "$1" && git pull
@@ -149,7 +148,7 @@ function reset_db() {
 }
 
 function dump_to_csv() {
-  local_bdd && psql -c "\\copy ${1}(${2}) TO './${1}.csv' DELIMITER ';' CSV HEADER"
+  psql -c "\\copy ${1}(${2}) TO './${1}.csv' DELIMITER ';' CSV HEADER"
 }
 
 function ssh-tunnel() {
@@ -160,4 +159,12 @@ function docker-cp() {
   id=$(docker create ${1})
   docker cp $id:${2} ${3}
   docker rm -v $id
+}
+
+function db-prod() {
+  ssh-tunnel prod-master 5432
+}
+
+function db-staging() {
+  ssh-tunnel staging-master 5432
 }
