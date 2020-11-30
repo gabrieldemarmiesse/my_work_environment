@@ -86,9 +86,6 @@ RUN --mount=type=cache,target=/var/cache/apt,id=cache_apt \
 
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-RUN --mount=src=/full_bazel_install.sh,destination=full_bazel_install.sh bash ./full_bazel_install.sh
-ENV PATH="/root/bin:$PATH"
-
 COPY --from=python_install /opt/conda /opt/conda
 ENV PATH="/opt/conda/bin:${PATH}"
 RUN --mount=type=bind,from=download_gh_cli,source=/gh_cli.deb,target=/gh_cli.deb dpkg -i /gh_cli.deb
@@ -114,5 +111,5 @@ COPY .pypirc /root/.pypirc
 
 RUN python -c "print('hello world')"
 RUN zsh -c "echo hello world"
-RUN echo $PATH && bazel --help && docker-compose --help && docker --help && mc --help
+RUN echo $PATH && docker-compose --help && docker --help && mc --help
 RUN docker buildx install

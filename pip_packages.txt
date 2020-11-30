@@ -46,7 +46,7 @@ smmap2
 sphinx
 SQLAlchemy
 structlog
-tensorflow-cpu==2.2.0rc4
+tensorflow-cpu
 thefuck
 tinydb
 tinydb-serialization
@@ -64,3 +64,5 @@ minio
 fastapi
 python-jose
 sqlalchemy
+PyGithub
+typer
