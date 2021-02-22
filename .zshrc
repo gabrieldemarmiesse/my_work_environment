@@ -102,6 +102,9 @@ source $ZSH/oh-my-zsh.sh
 setopt INC_APPEND_HISTORY
 export HISTTIMEFORMAT="[%F %T] "
 
+set -o allexport
+source /root/.secret_envs/aws.env
+set +o allexport
 
 alias gacp="git add . && git commit && git push"
 alias bgacp="black ./ && git add . && git commit && git push"
