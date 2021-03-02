@@ -2,8 +2,6 @@
 set -e
 export DOCKER_CLI_EXPERIMENTAL=enabled
 docker buildx build -t gabrieldemarmiesse/work_env:local_build \
-    --cache-from=gabrieldemarmiesse/my_work_environment:cache \
-    --cache-to=gabrieldemarmiesse/my_work_environment:cache \
     --load .
 
 set +e
