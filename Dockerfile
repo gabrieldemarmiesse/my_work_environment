@@ -15,8 +15,7 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
 ENV PATH="/opt/conda/bin:${PATH}"
 
 RUN --mount=type=cache,target=/opt/conda/pkgs \
-    --mount=src=/conda_packages.txt,destination=/conda_packages.txt,ro=true \
-    conda install --file /conda_packages.txt
+    conda install python=3.9
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=src=/pip_packages.txt,destination=/pip_packages.txt,ro=true \

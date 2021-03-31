@@ -174,3 +174,8 @@ function db-prod() {
 function db-staging() {
   ssh-tunnel staging-master 5432
 }
+function db-oneatlas-staging() {
+  ssh-tunnel oneatlas-staging-master 5432
+}
+
+export DEFAULT_USER="$(whoami)"

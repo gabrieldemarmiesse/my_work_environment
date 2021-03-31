@@ -12,6 +12,7 @@ GitPython
 google-api-python-client
 hashfs
 isort
+ipython
 jsonpickle
 Mako
 markdown
@@ -46,7 +47,6 @@ smmap2
 sphinx
 SQLAlchemy
 structlog
-tensorflow-cpu
 thefuck
 tinydb
 tinydb-serialization
@@ -66,3 +66,4 @@ python-jose
 sqlalchemy
 PyGithub
 typer
+python-on-whales

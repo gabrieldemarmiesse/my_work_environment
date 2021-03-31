@@ -1,6 +1,0 @@
-numpy
-ipython
-tqdm
-jupyter
-scipy
-pandas
