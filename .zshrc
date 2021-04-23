@@ -179,3 +179,7 @@ function db-oneatlas-staging() {
 }
 
 export DEFAULT_USER="$(whoami)"
+
+function sdocker {
+        (cd /projects/work/scube && docker $@)
+}
