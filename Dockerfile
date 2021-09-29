@@ -5,7 +5,6 @@ FROM ubuntu:18.04 as basic_ubuntu
 RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf.d/force_yes
 RUN apt-get update && apt-get install wget gcc libpq-dev curl
 
-#------------------------------------------------------------------------------
 FROM basic_ubuntu as python_install
 
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
@@ -23,36 +22,25 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 RUN --mount=src=/py_git,destination=/py_git pip install /py_git
 
-#------------------------------------------------------------------------------
 FROM basic_ubuntu as install_docker_compose
 
-RUN curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /docker-compose
+RUN wget https://github.com/docker/compose-cli/releases/download/v1.0.17/docker-linux-amd64 -O /docker-compose
 RUN chmod +x /docker-compose
 
-#------------------------------------------------------------------------------
 FROM basic_ubuntu as install_mc
 RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /mc
 RUN chmod +x /mc
 
-#-----------------------------------------------------------------------------
-FROM basic_ubuntu as download_gh_cli
-
-ENV CLI_VERSION 0.7.0
-RUN wget https://github.com/cli/cli/releases/download/v${CLI_VERSION}/gh_${CLI_VERSION}_linux_amd64.deb -O /gh_cli.deb
-
-#-----------------------------------------------------------------------------
 FROM basic_ubuntu as install_pgfutter
 
 RUN wget -O /pgfutter https://github.com/lukasmartinelli/pgfutter/releases/download/v1.2/pgfutter_linux_amd64
 RUN chmod +x /pgfutter
 
-#-----------------------------------------------------------------------------
 FROM basic_ubuntu as install_buildx
 
-RUN wget -O /docker-buildx https://github.com/docker/buildx/releases/download/v0.4.2/buildx-v0.4.2.linux-amd64
+RUN wget -O /docker-buildx https://github.com/docker/buildx/releases/download/v0.6.3/buildx-v0.6.3.linux-amd64
 RUN chmod a+x /docker-buildx
 
-#------------------------------------------------------------------------------
 FROM basic_ubuntu
 
 RUN apt-get install -y locales
@@ -87,8 +75,7 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/m
 
 COPY --from=python_install /opt/conda /opt/conda
 ENV PATH="/opt/conda/bin:${PATH}"
-RUN --mount=type=bind,from=download_gh_cli,source=/gh_cli.deb,target=/gh_cli.deb dpkg -i /gh_cli.deb
-COPY --from=install_docker_compose /docker-compose /usr/local/bin/docker-compose
+COPY --from=install_docker_compose /docker-compose /root/.docker/cli-plugins/
 COPY --from=install_mc /mc /usr/local/bin/mc
 COPY --from=install_pgfutter /pgfutter /usr/local/bin/pgfutter
 COPY --from=install_buildx  /docker-buildx /root/.docker/cli-plugins/
@@ -110,5 +97,5 @@ COPY .pypirc /root/.pypirc
 
 RUN python -c "print('hello world')"
 RUN zsh -c "echo hello world"
-RUN echo $PATH && docker-compose --help && docker --help && mc --help
+RUN echo $PATH && docker compose --help && docker --help && mc --help
 RUN docker buildx install
