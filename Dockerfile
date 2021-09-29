@@ -24,7 +24,7 @@ RUN --mount=src=/py_git,destination=/py_git pip install /py_git
 
 FROM basic_ubuntu as install_docker_compose
 
-RUN wget https://github.com/docker/compose-cli/releases/download/v1.0.17/docker-linux-amd64 -O /docker-compose
+RUN wget https://github.com/docker/compose-cli/releases/download/v2.0.0-rc.2/docker-compose-linux-amd64 -O /docker-compose
 RUN chmod +x /docker-compose
 
 FROM basic_ubuntu as install_mc
