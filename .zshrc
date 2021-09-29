@@ -138,7 +138,7 @@ export PGDB=imagedb
 export PGPORT=5432
 
 function gc() {
-  git checkout "$1" && git pull
+  git checkout "$@" && git pull
 }
 
 function my_du() {
