@@ -1,5 +1,3 @@
-# syntax = docker/dockerfile:experimental
-
 FROM ubuntu:18.04 as basic_ubuntu
 
 RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf.d/force_yes
