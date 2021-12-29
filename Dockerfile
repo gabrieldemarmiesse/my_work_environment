@@ -47,6 +47,9 @@ RUN locale-gen en_US.UTF-8
 # prepare the cache.
 RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
 
+# to get the latest version of git
+RUN add-apt-repository ppa:git-core/ppa -y && apt-get update && apt-get install git -y
+
 ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/cache/apt,id=cache_apt \
     --mount=type=cache,target=/var/lib/apt,id=lib_apt \
