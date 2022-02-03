@@ -104,6 +104,7 @@ export HISTTIMEFORMAT="[%F %T] "
 
 set -o allexport
 source /root/.secret_envs/aws.env
+source /root/.secret_envs/github_packages.env
 set +o allexport
 
 alias gacp="git add . && git commit && git push"
@@ -112,10 +113,8 @@ alias ibgacp="isort ./ && black ./ && git add . && git commit && git push"
 alias bfgacp="black ./ && flake8 && git add . && git commit && git push"
 alias ibfgacp="isort ./ && black ./ && flake8 && git add . && git commit && git push"
 alias sqd='date -u "+%Y%m%d%H%M%S"'
-alias dc='docker-compose'
 alias login_ecr='aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 766281746212.dkr.ecr.eu-west-1.amazonaws.com'
 alias gac="git add . && git commit"
-alias gcb="git checkout -b"
 alias upload-to-pypi="rm -rf dist/ && python setup.py sdist && twine upload  --repository-url=https://upload.pypi.org/legacy/ dist/*"
 alias docker-container-prune-all="docker kill $(docker ps  | grep -v 'gabriel_work_env' | awk 'NR>1 {print $1}')"
 
@@ -149,14 +148,6 @@ function squash_all() {
   git reset $(git merge-base master $(git rev-parse --abbrev-ref HEAD))
 }
 
-function reset_db() {
-  docker run --rm -v dev-environment_postgres_persistence:/do -v /projects/work/backup_db/volume:/back busybox sh -c "rm -rf /do/* && cp -r /back/* /do/ && ls /do/"
-}
-
-function dump_to_csv() {
-  psql -c "\\copy ${1}(${2}) TO './${1}.csv' DELIMITER ';' CSV HEADER"
-}
-
 function ssh-tunnel() {
   ssh -N -L  ${2}:127.0.0.1:${2} ${1}
 }
@@ -180,6 +171,10 @@ function db-oneatlas-staging() {
 
 export DEFAULT_USER="$(whoami)"
 
-function sdocker {
-        (cd /projects/work/scube && docker $@)
+function update() {
+  gc master && gc ${1} && git merge master && git push && ibfgacp
+}
+
+function cb() {
+  gc master && git checkout -b $(cat /proc/sys/kernel/random/uuid)
 }
