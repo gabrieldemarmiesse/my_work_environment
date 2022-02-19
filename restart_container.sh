@@ -32,6 +32,7 @@ sudo docker run \
      --net=host \
      --pid=host \
      --privileged \
+     --gpus all \
      --name gabriel_work_env \
      gabrieldemarmiesse/work_env:local_build \
      bash -c 'service ssh start && sleep infinity'

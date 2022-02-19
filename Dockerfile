@@ -1,7 +1,8 @@
-FROM ubuntu:18.04 as basic_ubuntu
+FROM nvidia/cuda:11.2.2-cudnn8-devel-ubuntu20.04 as basic_ubuntu
 
 RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf.d/force_yes
-RUN apt-get update && apt-get install wget gcc libpq-dev curl
+RUN apt-get update
+RUN apt-get install wget gcc libpq-dev curl
 
 FROM basic_ubuntu as python_install
 
@@ -48,6 +49,8 @@ RUN locale-gen en_US.UTF-8
 RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
 
 # to get the latest version of git
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
+RUN apt-get install software-properties-common
 RUN add-apt-repository ppa:git-core/ppa -y && apt-get update && apt-get install git -y
 
 ENV DEBIAN_FRONTEND=noninteractive

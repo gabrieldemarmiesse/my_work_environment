@@ -67,3 +67,4 @@ sqlalchemy
 PyGithub
 typer
 python-on-whales
+tensorflow
