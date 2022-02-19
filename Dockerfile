@@ -52,7 +52,9 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloa
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 RUN apt-get install software-properties-common
 RUN add-apt-repository ppa:git-core/ppa -y && apt-get update && apt-get install git -y
-
+RUN sed -i -- 's&deb http://deb.debian.org/debian jessie-updates main&#deb http://deb.debian.org/debian jessie-updates main&g' /etc/apt/sources.list && \
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -   && \
+    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list
 ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/cache/apt,id=cache_apt \
     --mount=type=cache,target=/var/lib/apt,id=lib_apt \
