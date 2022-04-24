@@ -23,7 +23,7 @@ RUN --mount=src=/py_git,destination=/py_git pip install /py_git
 
 FROM basic_ubuntu as install_docker_compose
 
-RUN wget https://github.com/docker/compose-cli/releases/download/v2.0.0-rc.2/docker-compose-linux-amd64 -O /docker-compose
+RUN wget https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -O /docker-compose
 RUN chmod +x /docker-compose
 
 FROM basic_ubuntu as install_mc
@@ -42,7 +42,7 @@ RUN chmod a+x /docker-buildx
 
 FROM basic_ubuntu as install_pycharm
 
-RUN mkdir /pycharm && wget -c https://download.jetbrains.com/python/pycharm-professional-2021.3.3.tar.gz -O - | tar -xz -C /pycharm
+RUN mkdir /pycharm && wget -c https://download.jetbrains.com/python/pycharm-professional-2022.1.tar.gz -O - | tar -xz -C /pycharm
 
 FROM basic_ubuntu
 
@@ -90,6 +90,7 @@ COPY --from=install_mc /mc /usr/local/bin/mc
 COPY --from=install_pgfutter /pgfutter /usr/local/bin/pgfutter
 COPY --from=install_buildx  /docker-buildx /root/.docker/cli-plugins/
 COPY --from=install_pycharm /pycharm /usr/local/bin/pycharm
+ENV PATH="/usr/local/bin/pycharm/pycharm-2022.1/bin:${PATH}"
 
 COPY .zshrc /root/.zshrc
 RUN git config --global user.email gabrieldemarmiesse@gmail.com
