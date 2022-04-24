@@ -18,6 +18,8 @@ sudo docker run \
      -v general_cache:/root/.cache \
      -v apt_cache1:/var/cache/apt \
      -v apt_cache2:/var/lib/apt \
+     -v jetbrains_config:/root/.config/JetBrains \
+     -v jetbrains_plugins:/root/.local/share \
      -v /root/.ssh:/root/.ssh \
      -v mc_config:/root/.mc/ \
      -v aws_config:/root/.aws/ \

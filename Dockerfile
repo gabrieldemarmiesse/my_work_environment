@@ -40,6 +40,10 @@ FROM basic_ubuntu as install_buildx
 RUN wget -O /docker-buildx https://github.com/docker/buildx/releases/download/v0.6.3/buildx-v0.6.3.linux-amd64
 RUN chmod a+x /docker-buildx
 
+FROM basic_ubuntu as install_pycharm
+
+RUN mkdir /pycharm && wget -c https://download.jetbrains.com/python/pycharm-professional-2021.3.3.tar.gz -O - | tar -xz -C /pycharm
+
 FROM basic_ubuntu
 
 RUN apt-get install -y locales
@@ -85,6 +89,7 @@ COPY --from=install_docker_compose /docker-compose /root/.docker/cli-plugins/
 COPY --from=install_mc /mc /usr/local/bin/mc
 COPY --from=install_pgfutter /pgfutter /usr/local/bin/pgfutter
 COPY --from=install_buildx  /docker-buildx /root/.docker/cli-plugins/
+COPY --from=install_pycharm /pycharm /usr/local/bin/pycharm
 
 COPY .zshrc /root/.zshrc
 RUN git config --global user.email gabrieldemarmiesse@gmail.com
