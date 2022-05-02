@@ -117,6 +117,8 @@ alias login_ecr='aws ecr get-login-password --region eu-west-1 | docker login --
 alias gac="git add . && git commit"
 alias upload-to-pypi="rm -rf dist/ && python setup.py sdist && twine upload  --repository-url=https://upload.pypi.org/legacy/ dist/*"
 alias docker-container-prune-all="docker kill $(docker ps  | grep -v 'gabriel_work_env' | awk 'NR>1 {print $1}')"
+alias scube-compose="docker buildx bake config-manager && docker compose"
+
 
 export E3_REPOS=/projects/dev-environment/projects
 export E3_REPOSITORIES=/projects/work
