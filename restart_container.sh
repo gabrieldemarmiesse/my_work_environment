@@ -37,5 +37,6 @@ sudo docker run \
      --gpus all \
      --env DISPLAY \
      --name gabriel_work_env \
+     --shm-size=2gb \
      gabrieldemarmiesse/work_env:local_build \
      bash -c 'service ssh start && sleep infinity'

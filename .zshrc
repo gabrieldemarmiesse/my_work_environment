@@ -107,11 +107,12 @@ source /root/.secret_envs/aws.env
 source /root/.secret_envs/github_packages.env
 set +o allexport
 
+alias all-changed-python-files='git status --porcelain | grep -v "^ D " | awk  "{print $2}" | grep "\.py$"'
+
 alias gacp="git add . && git commit && git push"
 alias bgacp="black ./ && git add . && git commit && git push"
 alias ibgacp="isort ./ && black ./ && git add . && git commit && git push"
 alias bfgacp="black ./ && flake8 && git add . && git commit && git push"
-alias ibfgacp="isort ./ && black ./ && flake8 && git add . && git commit && git push"
 alias sqd='date -u "+%Y%m%d%H%M%S"'
 alias login_ecr='aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 766281746212.dkr.ecr.eu-west-1.amazonaws.com'
 alias gac="git add . && git commit"
@@ -179,4 +180,12 @@ function update() {
 
 function cb() {
   gc master && git checkout -b $(cat /proc/sys/kernel/random/uuid)
+}
+
+function all-changed-python-files() {
+  git status --porcelain | grep -v "^ D " | grep -v "^D " | awk  '{print $2}' | grep "\.py$"
+}
+
+function ibfgacp() {
+  isort $(all-changed-python-files) && black $(all-changed-python-files) && flake8 $(all-changed-python-files) && git add . && git commit && git push
 }
