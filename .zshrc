@@ -107,8 +107,6 @@ source /root/.secret_envs/aws.env
 source /root/.secret_envs/github_packages.env
 set +o allexport
 
-alias all-changed-python-files='git status --porcelain | grep -v "^ D " | awk  "{print $2}" | grep "\.py$"'
-
 alias gacp="git add . && git commit && git push"
 alias bgacp="black ./ && git add . && git commit && git push"
 alias ibgacp="isort ./ && black ./ && git add . && git commit && git push"
@@ -183,7 +181,7 @@ function cb() {
 }
 
 function all-changed-python-files() {
-  git status --porcelain | grep -v "^ D " | grep -v "^D " | awk  '{print $2}' | grep "\.py$"
+  git status --porcelain | python /opt/py_git/lint/select_py_files.py
 }
 
 function ibfgacp() {

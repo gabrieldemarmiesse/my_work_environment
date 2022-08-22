@@ -13,17 +13,11 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
 ENV PATH="/opt/conda/bin:${PATH}"
 
 RUN --mount=type=cache,target=/opt/conda/pkgs \
-    conda install python=3.9
-
-RUN --mount=type=cache,target=/root/.cache/pip \
-    --mount=src=/pip_packages.txt,destination=/pip_packages.txt,ro=true \
-    pip install -r /pip_packages.txt
-
-RUN --mount=src=/py_git,destination=/py_git pip install /py_git
+    conda install python=3.10
 
 FROM basic_ubuntu as install_docker_compose
 
-RUN wget https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -O /docker-compose
+RUN wget https://github.com/docker/compose/releases/download/v2.9.0/docker-compose-linux-x86_64 -O /docker-compose
 RUN chmod +x /docker-compose
 
 FROM basic_ubuntu as install_mc
@@ -37,12 +31,8 @@ RUN chmod +x /pgfutter
 
 FROM basic_ubuntu as install_buildx
 
-RUN wget -O /docker-buildx https://github.com/docker/buildx/releases/download/v0.6.3/buildx-v0.6.3.linux-amd64
+RUN wget -O /docker-buildx https://github.com/docker/buildx/releases/download/v0.9.1/buildx-v0.9.1.linux-amd64
 RUN chmod a+x /docker-buildx
-
-FROM basic_ubuntu as install_pycharm
-
-RUN mkdir /pycharm && wget -c https://download.jetbrains.com/python/pycharm-professional-2022.1.tar.gz -O - | tar -xz -C /pycharm
 
 FROM basic_ubuntu
 
@@ -89,8 +79,7 @@ COPY --from=install_docker_compose /docker-compose /root/.docker/cli-plugins/
 COPY --from=install_mc /mc /usr/local/bin/mc
 COPY --from=install_pgfutter /pgfutter /usr/local/bin/pgfutter
 COPY --from=install_buildx  /docker-buildx /root/.docker/cli-plugins/
-COPY --from=install_pycharm /pycharm /usr/local/bin/pycharm
-ENV PATH="/usr/local/bin/pycharm/pycharm-2022.1/bin:${PATH}"
+COPY py_git /opt/py_git
 
 COPY .zshrc /root/.zshrc
 RUN git config --global user.email gabrieldemarmiesse@gmail.com
