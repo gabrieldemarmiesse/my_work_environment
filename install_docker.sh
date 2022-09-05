@@ -19,6 +19,7 @@ echo \
 apt-get update -y
 apt-get install -y docker-ce docker-ce-cli containerd.io
 service docker start
+sleep 3
 docker run hello-world
 
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
@@ -30,7 +31,7 @@ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
 apt-get update
 apt-get install -y nvidia-docker2
 service docker restart
-sleep 1
-docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
+sleep 3
+docker run --rm --gpus all nvidia/cuda:11.0.3-base-ubuntu20.04 nvidia-smi
 
 
