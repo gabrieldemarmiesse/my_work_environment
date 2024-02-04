@@ -102,40 +102,14 @@ source $ZSH/oh-my-zsh.sh
 setopt INC_APPEND_HISTORY
 export HISTTIMEFORMAT="[%F %T] "
 
-set -o allexport
-source /root/.secret_envs/aws.env
-source /root/.secret_envs/github_packages.env
-set +o allexport
 
 alias gacp="git add . && git commit && git push"
-alias bgacp="black ./ && git add . && git commit && git push"
-alias ibgacp="isort ./ && black ./ && git add . && git commit && git push"
-alias bfgacp="black ./ && flake8 && git add . && git commit && git push"
-alias sqd='date -u "+%Y%m%d%H%M%S"'
-alias login_ecr='aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 766281746212.dkr.ecr.eu-west-1.amazonaws.com'
 alias gac="git add . && git commit"
 alias upload-to-pypi="rm -rf dist/ && python setup.py sdist && twine upload  --repository-url=https://upload.pypi.org/legacy/ dist/*"
-alias docker-container-prune-all="docker kill $(docker ps  | grep -v 'gabriel_work_env' | awk 'NR>1 {print $1}')"
-alias scube-compose="docker buildx bake config-manager && docker compose"
 
 
-export E3_REPOS=/projects/dev-environment/projects
-export E3_REPOSITORIES=/projects/work
-export TF_VERSION=2.1.0
-export PY_VERSION=3.5
 export DOCKER_CLI_EXPERIMENTAL=enabled
-export STORAGE_ROOT=/projects/work/storage_root
-export SECRET_ENVS=/root/.secret_envs
-export SECRETS_DIRECTORY=/root/.secret_envs
-export E3_DEVELOPER_USERNAME=gabriel.demarmiesse
 export COMPOSE_DOCKER_CLI_BUILD=1
-export REGISTRY=766281746212.dkr.ecr.eu-west-1.amazonaws.com
-
-export PGUSER=imagedb
-export PGPASSWORD=imagedb
-export PGHOST=localhost
-export PGDB=imagedb
-export PGPORT=5432
 
 function gc() {
   git checkout "$@" && git pull
@@ -159,17 +133,6 @@ function docker-cp() {
   docker rm -v $id
 }
 
-function db-prod() {
-  ssh-tunnel prod-master 5432
-}
-
-function db-staging() {
-  ssh-tunnel staging-master 5432
-}
-function db-oneatlas-staging() {
-  ssh-tunnel oneatlas-staging-master 5432
-}
-
 export DEFAULT_USER="$(whoami)"
 
 function update() {
@@ -182,8 +145,4 @@ function cb() {
 
 function all-changed-python-files() {
   git status --porcelain | python /opt/py_git/lint/select_py_files.py
-}
-
-function ibfgacp() {
-  isort $(all-changed-python-files) && black $(all-changed-python-files) && flake8 $(all-changed-python-files) && git add . && git commit && git push
 }

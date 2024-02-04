@@ -1,8 +1,8 @@
-FROM nvidia/cuda:11.2.2-cudnn8-devel-ubuntu20.04 as basic_ubuntu
+FROM nvidia/cuda:12.3.1-devel-ubuntu22.04 as basic_ubuntu
 
 RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf.d/force_yes
 RUN apt-get update
-RUN apt-get install wget gcc libpq-dev curl
+RUN apt-get install -y wget gcc libpq-dev curl
 
 FROM basic_ubuntu as python_install
 
@@ -14,25 +14,6 @@ ENV PATH="/opt/conda/bin:${PATH}"
 
 RUN --mount=type=cache,target=/opt/conda/pkgs \
     conda install python=3.10
-
-FROM basic_ubuntu as install_docker_compose
-
-RUN wget https://github.com/docker/compose/releases/download/v2.9.0/docker-compose-linux-x86_64 -O /docker-compose
-RUN chmod +x /docker-compose
-
-FROM basic_ubuntu as install_mc
-RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /mc
-RUN chmod +x /mc
-
-FROM basic_ubuntu as install_pgfutter
-
-RUN wget -O /pgfutter https://github.com/lukasmartinelli/pgfutter/releases/download/v1.2/pgfutter_linux_amd64
-RUN chmod +x /pgfutter
-
-FROM basic_ubuntu as install_buildx
-
-RUN wget -O /docker-buildx https://github.com/docker/buildx/releases/download/v0.9.1/buildx-v0.9.1.linux-amd64
-RUN chmod a+x /docker-buildx
 
 FROM basic_ubuntu
 
@@ -56,10 +37,6 @@ RUN --mount=type=cache,target=/var/cache/apt,id=cache_apt \
     apt-get update && \
     cat /apt_packages.txt | xargs apt-get install
 
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
-RUN apt-get update && apt-get install nodejs
-RUN node -v && npm -v
-RUN npm install prettier eslint --global
 
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 RUN add-apt-repository \
@@ -75,10 +52,6 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/m
 
 COPY --from=python_install /opt/conda /opt/conda
 ENV PATH="/opt/conda/bin:${PATH}"
-COPY --from=install_docker_compose /docker-compose /root/.docker/cli-plugins/
-COPY --from=install_mc /mc /usr/local/bin/mc
-COPY --from=install_pgfutter /pgfutter /usr/local/bin/pgfutter
-COPY --from=install_buildx  /docker-buildx /root/.docker/cli-plugins/
 COPY py_git /opt/py_git
 
 COPY .zshrc /root/.zshrc
@@ -98,5 +71,5 @@ COPY .pypirc /root/.pypirc
 
 RUN python -c "print('hello world')"
 RUN zsh -c "echo hello world"
-RUN echo $PATH && docker compose --help && docker --help && mc --help
+RUN echo $PATH && docker compose --help && docker --help
 RUN docker buildx install
