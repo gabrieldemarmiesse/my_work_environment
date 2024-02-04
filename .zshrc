@@ -111,6 +111,9 @@ alias upload-to-pypi="rm -rf dist/ && python setup.py sdist && twine upload  --r
 export DOCKER_CLI_EXPERIMENTAL=enabled
 export COMPOSE_DOCKER_CLI_BUILD=1
 
+export MODULAR_HOME="/root/.modular"
+export PATH="/root/.modular/pkg/packages.modular.com_mojo/bin:$PATH"
+
 function gc() {
   git checkout "$@" && git pull
 }
