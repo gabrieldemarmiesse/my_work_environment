@@ -1,19 +1,8 @@
-FROM nvidia/cuda:12.3.1-devel-ubuntu22.04 as basic_ubuntu
+FROM nvidia/cuda:12.3.1-devel-ubuntu22.04 AS basic_ubuntu
 
 RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf.d/force_yes
 RUN apt-get update
 RUN apt-get install -y wget gcc libpq-dev curl
-
-FROM basic_ubuntu as python_install
-
-RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
-    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
-    rm ~/miniconda.sh
-
-ENV PATH="/opt/conda/bin:${PATH}"
-
-RUN --mount=type=cache,target=/opt/conda/pkgs \
-    conda install python=3.10
 
 FROM basic_ubuntu
 
@@ -50,8 +39,6 @@ RUN --mount=type=cache,target=/var/cache/apt,id=cache_apt \
 
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-COPY --from=python_install /opt/conda /opt/conda
-ENV PATH="/opt/conda/bin:${PATH}"
 COPY py_git /opt/py_git
 
 COPY .zshrc /root/.zshrc
@@ -62,6 +49,9 @@ RUN git config --global push.default upstream
 RUN git config --global credential.helper "cache --timeout=36000"
 COPY user_gitignore /root/.gitignore
 
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+RUN curl -ssL https://magic.modular.com/deb1074c-a3cf-4dba-85b4-ba4bf1c52b2e | bash
+
 RUN echo "Port 3844" >> /etc/ssh/sshd_config
 COPY id_rsa.pub /root/.ssh/authorized_keys
 RUN chmod 700 /root/.ssh/authorized_keys
@@ -69,7 +59,6 @@ COPY ./ssh_host_ecdsa_key /etc/ssh/
 COPY ./ssh_host_ecdsa_key.pub /etc/ssh/
 COPY .pypirc /root/.pypirc
 
-RUN python -c "print('hello world')"
 RUN zsh -c "echo hello world"
 RUN echo $PATH && docker compose --help && docker --help
 RUN docker buildx install

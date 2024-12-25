@@ -113,6 +113,7 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 
 export MODULAR_HOME="/root/.modular"
 export PATH="/root/.modular/pkg/packages.modular.com_mojo/bin:$PATH"
+export PATH="/root/.modular/bin:$PATH"
 
 function gc() {
   git checkout "$@" && git pull
@@ -149,3 +150,5 @@ function cb() {
 function all-changed-python-files() {
   git status --porcelain | python /opt/py_git/lint/select_py_files.py
 }
+
+
