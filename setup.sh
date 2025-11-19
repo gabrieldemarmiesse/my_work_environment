@@ -5,6 +5,7 @@ git config --global user.email gabrieldemarmiesse@gmail.com
 git config --global user.name gabrieldemarmiesse
 git config --global core.excludesfile ~/.gitignore
 git config --global push.default upstream
+git config --global pull.rebase false
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
