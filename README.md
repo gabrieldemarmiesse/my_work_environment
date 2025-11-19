@@ -46,3 +46,6 @@ default=root
 ```
 
 
+```
+mklink .ssh\config \\wsl.localhost\Ubuntu-24.04\root\.ssh\config
+```
