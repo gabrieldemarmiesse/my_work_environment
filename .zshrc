@@ -105,15 +105,6 @@ export HISTTIMEFORMAT="[%F %T] "
 
 alias gacp="git add . && git commit && git push"
 alias gac="git add . && git commit"
-alias upload-to-pypi="rm -rf dist/ && python setup.py sdist && twine upload  --repository-url=https://upload.pypi.org/legacy/ dist/*"
-
-
-export DOCKER_CLI_EXPERIMENTAL=enabled
-export COMPOSE_DOCKER_CLI_BUILD=1
-
-export MODULAR_HOME="/root/.modular"
-export PATH="/root/.modular/pkg/packages.modular.com_mojo/bin:$PATH"
-export PATH="/root/.modular/bin:$PATH"
 
 function gc() {
   git checkout "$@" && git pull
@@ -123,32 +114,28 @@ function my_du() {
   du -h --max-depth=1 $1
 }
 
-function squash_all() {
-  git reset $(git merge-base master $(git rev-parse --abbrev-ref HEAD))
-}
 
 function ssh-tunnel() {
   ssh -N -L  ${2}:127.0.0.1:${2} ${1}
 }
 
-function docker-cp() {
-  id=$(docker create ${1})
-  docker cp $id:${2} ${3}
-  docker rm -v $id
-}
-
 export DEFAULT_USER="$(whoami)"
 
-function update() {
-  gc master && gc ${1} && git merge master && git push && ibfgacp
-}
 
 function cb() {
   gc master && git checkout -b $(cat /proc/sys/kernel/random/uuid)
 }
 
-function all-changed-python-files() {
-  git status --porcelain | python /opt/py_git/lint/select_py_files.py
-}
+source ~/.secrets
+
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
 
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+. "$HOME/.local/bin/env"
+. "$HOME/.cargo/env"
+export PATH="$HOME/.pixi/bin:$PATH"
